@@ -1,4 +1,10 @@
 <div class="d-flex align-items-center gap-2">
+    {{-- Tombol Lihat QR --}}
+    <a href="{{ route('tables.show', $id) }}" class="btn btn-sm btn-icon btn-text-primary rounded-pill waves-effect"
+        data-bs-toggle="tooltip" title="Lihat & Cetak QR Code">
+        <i class="ri-qr-code-line ri-20px"></i>
+    </a>
+
     {{-- Tombol Edit --}}
     <a href="{{ route('tables.edit', $id) }}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect"
         data-bs-toggle="tooltip" title="Edit Meja">
@@ -11,6 +17,10 @@
         <i class="ri-more-2-line ri-20px"></i>
     </button>
     <div class="dropdown-menu dropdown-menu-end m-0">
+        {{-- Tombol Lihat QR --}}
+        <a href="{{ route('tables.show', $id) }}" class="dropdown-item">
+            <i class="ri-qr-code-line me-2"></i><span>Lihat QR Code</span>
+        </a>
         {{-- Tombol Edit --}}
         <a href="{{ route('tables.edit', $id) }}" class="dropdown-item">
             <i class="ri-edit-box-line me-2"></i><span>Edit</span>

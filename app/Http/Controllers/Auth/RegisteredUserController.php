@@ -42,6 +42,10 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        if (\Spatie\Permission\Models\Role::where('name', 'user')->exists()) {
+            $user->assignRole('user');
+        }
+
         event(new Registered($user));
 
         Auth::login($user);

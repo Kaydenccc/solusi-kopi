@@ -91,6 +91,26 @@
     <!-- Page JS -->
     @vite('resources/js/auth/script.js')
 
+    <!-- Password Toggle Handler -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.form-password-toggle .input-group-text').forEach(function (toggle) {
+                toggle.addEventListener('click', function () {
+                    var input = toggle.closest('.input-group').querySelector('input');
+                    var icon = toggle.querySelector('i');
+                    if (!input) return;
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        if (icon) { icon.classList.remove('ri-eye-off-line'); icon.classList.add('ri-eye-line'); }
+                    } else {
+                        input.type = 'password';
+                        if (icon) { icon.classList.remove('ri-eye-line'); icon.classList.add('ri-eye-off-line'); }
+                    }
+                });
+            });
+        });
+    </script>
+
     <script src="{{ asset('/materialize') }}/assets/vendor/libs/toastr/toastr.js"></script>
     <script>
         @if (session('success'))

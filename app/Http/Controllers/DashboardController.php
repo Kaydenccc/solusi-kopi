@@ -65,8 +65,8 @@ class DashboardController extends Controller
             // Data kasir bisa tetap pakai service, atau custom jika perlu
             // ... (bisa dioptimalkan berikutnya)
         } elseif (method_exists($user, 'hasRole') && $user->hasRole('user')) {
-            return redirect()->route('order.history');
+            return redirect()->route('welcome');
         }
-        return view('dashboard');
+        return redirect()->route('welcome');
     }
 }

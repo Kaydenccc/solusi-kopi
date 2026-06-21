@@ -32,7 +32,7 @@ Route::get('/select-table/{table_code}', [WelcomeController::class, 'selectTable
 // ==================================================
 // 🛡️ Protected Routes (auth + verified)
 // ==================================================
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     // Dashboard (role-based)
     Route::get('/dashboard', [DashboardController::class, '__invoke'])
@@ -57,6 +57,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::prefix('user-management')->group(function () {
             Route::resource('users', UserController::class);
         });
+
+        Route::get('tables/master-qr', [App\Http\Controllers\Console\TableController::class, 'masterQr'])->name('tables.master-qr');
 
         Route::resources([
             'outlets'     => OutletController::class,

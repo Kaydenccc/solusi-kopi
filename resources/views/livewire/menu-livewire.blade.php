@@ -24,22 +24,18 @@
                 {{-- Filter Kategori --}}
                 @if(count($categories) > 1)
                     <div class="mb-4 overflow-auto filter-scroll" style="white-space:nowrap;">
-                        <button wire:click="filterByCategory('all')"
-                            wire:loading.attr="disabled"
-                            wire:loading.class="opacity-75"
+                        <button type="button" wire:click="filterByCategory('all')"
                             class="btn btn-sm me-2 mb-2 px-3 py-1 rounded-pill @if($selectedCategory === 'all') btn-primary text-white @else btn-outline-primary @endif"
                             style="transition:all .2s;min-width:90px;">
                             <i class="ri-apps-line me-1"></i>Semua
-                            <div wire:loading wire:target="selectedCategory" class="spinner-border spinner-border-sm ms-1" style="width:12px;height:12px;"></div>
+                            <div wire:loading wire:target="filterByCategory" class="spinner-border spinner-border-sm ms-1" style="width:12px;height:12px;"></div>
                         </button>
                         @foreach($categories as $cat)
-                            <button wire:click="filterByCategory('{{ addslashes($cat) }}')"
-                                wire:loading.attr="disabled"
-                                wire:loading.class="opacity-75"
+                            <button type="button" wire:click="filterByCategory('{{ addslashes($cat) }}')"
                                 class="btn btn-sm me-2 mb-2 px-3 py-1 rounded-pill @if($selectedCategory === $cat) btn-primary text-white @else btn-outline-primary @endif"
                                 style="transition:all .2s;min-width:90px;">
                                 {{ $cat }}
-                                <div wire:loading wire:target="selectedCategory" class="spinner-border spinner-border-sm ms-1" style="width:12px;height:12px;"></div>
+                                <div wire:loading wire:target="filterByCategory" class="spinner-border spinner-border-sm ms-1" style="width:12px;height:12px;"></div>
                             </button>
                         @endforeach
                     </div>
@@ -161,8 +157,8 @@
                                                          data-bs-placement="top"
                                                          title="{{ $product->name }} - Rp {{ number_format($product->price, 0, ',', '.') }}">
                                                         <div class="position-relative">
-                                                            @if($product->image_url)
-                                                                <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}" class="card-img-top rounded-3" style="aspect-ratio:1/1;object-fit:cover;min-height:100px;max-height:120px;">
+                                                            @if($product->image ?? $product->image_url)
+                                                                <img src="{{ asset($product->image ?? $product->image_url) }}" alt="{{ $product->name }}" class="card-img-top rounded-3" style="aspect-ratio:1/1;object-fit:cover;min-height:100px;max-height:120px;">
                                                             @else
                                                                 <div class="bg-light rounded-3 d-flex align-items-center justify-content-center" style="aspect-ratio:1/1;min-height:100px;max-height:120px;">
                                                                     <i class="ri-image-line text-muted" style="font-size:1.5rem;"></i>

@@ -510,7 +510,7 @@ class MenuLivewire extends Component
                     'payment_gateway_ref' => null, // No gateway ref for cash
                     'snap_token' => null,
                 ]);
-                return redirect()->route('order.success', ['order' => $order->order_number]);
+                return redirect()->route('order.success', ['order_number' => $order->order_number]);
             }
         } catch (\Exception $e) {
             $this->dispatch('show-notification', type: 'error', message: 'Terjadi kesalahan saat memproses pesanan Anda: ' . $e->getMessage());
@@ -656,7 +656,17 @@ class MenuLivewire extends Component
             ->map(fn($group) => $group->all())
             ->toArray();
 
-        $this->categories = array_keys($this->productsGrouped);
+        // Refresh daftar kategori dari SEMUA produk available (bukan hasil filter)
+        // agar tombol filter kategori tetap muncul setelah user pilih kategori
+        if ($this->outlet) {
+            $allProducts = Product::where('outlet_id', $this->outlet->id)
+                ->where('is_available', true)
+                ->with('category')
+                ->get();
+            $this->categories = $allProducts->groupBy(fn($p) => $p->category->name ?? 'Tanpa Kategori')
+                ->keys()
+                ->toArray();
+        }
 
         // Update active category jika kategori yang dipilih tidak ada dalam hasil filter
         if ($this->selectedCategory !== 'all' && !in_array($this->selectedCategory, $this->categories)) {

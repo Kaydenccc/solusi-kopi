@@ -75,6 +75,14 @@ class TableController extends Controller
     }
 
     /**
+     * Display master QR code (single QR for all tables).
+     */
+    public function masterQr()
+    {
+        return view('console.tables.master-qr');
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Table $table)

@@ -50,7 +50,7 @@
                     <div class="mb-3">
                         <label for="price" class="form-label">Harga</label>
                         <input type="number" class="form-control @error('price') is-invalid @enderror" id="price"
-                            name="price" value="{{ old('price', $product->price) }}" required min="0">
+                            name="price" value="{{ old('price', (int) $product->price) }}" required min="0">
                         @error('price')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -59,7 +59,7 @@
                         <label for="image" class="form-label">Gambar Saat Ini</label>
                         @if ($product->image)
                             <div class="mb-2">
-                                <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}"
+                                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
                                     class="img-thumbnail" width="100">
                             </div>
                             <div class="form-check mb-2">

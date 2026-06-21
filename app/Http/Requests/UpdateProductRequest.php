@@ -20,6 +20,15 @@ class UpdateProductRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('price')) {
+            $this->merge([
+                'price' => preg_replace('/[^\d]/', '', (string) $this->input('price')),
+            ]);
+        }
+    }
+
     public function rules(): array
     {
         return [
@@ -28,7 +37,7 @@ class UpdateProductRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'price' => ['required', 'numeric', 'min:0'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'], // For image upload
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5120'], // For image upload
             'remove_image' => ['nullable', 'boolean'], // Untuk menghapus gambar yang sudah ada
             'is_available' => ['required', 'boolean'], // Changed from status to is_available
         ];
@@ -50,7 +59,7 @@ class UpdateProductRequest extends FormRequest
             'price.min' => 'Harga tidak boleh kurang dari nol.',
             'image.image' => 'Gambar produk harus berupa gambar.',
             'image.mimes' => 'Gambar produk harus memiliki format: jpeg, png, jpg, gif, svg.',
-            'image.max' => 'Ukuran gambar produk tidak boleh lebih dari 2MB.',
+            'image.max' => 'Ukuran gambar produk tidak boleh lebih dari 5MB.',
             'is_available.required' => 'Ketersediaan produk wajib diisi.',
             'is_available.boolean' => 'Ketersediaan produk harus berupa nilai boolean (true/false).',
         ];

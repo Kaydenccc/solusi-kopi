@@ -33,7 +33,7 @@ class ProductDataTable extends DataTable
                 return $product->category->name ?? 'N/A';
             })
             ->editColumn('price', function (Product $product) {
-                return 'Rp ' . number_format($product->price, 2, ',', '.');
+                return 'Rp ' . number_format($product->price, 0, ',', '.');
             })
             ->editColumn('is_available', function (Product $product) {
                 return $product->is_available ? '<span class="badge bg-success">Tersedia</span>' : '<span class="badge bg-danger">Tidak Tersedia</span>';
