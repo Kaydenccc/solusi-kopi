@@ -62,8 +62,8 @@ class DashboardController extends Controller
                 'recapMode',
             ));
         } elseif (method_exists($user, 'hasRole') && $user->hasRole('kasir')) {
-            // Data kasir bisa tetap pakai service, atau custom jika perlu
-            // ... (bisa dioptimalkan berikutnya)
+            // Kasir diarahkan ke halaman Order Management sebagai halaman kerja utama
+            return redirect()->route('console.orders.index');
         } elseif (method_exists($user, 'hasRole') && $user->hasRole('user')) {
             return redirect()->route('welcome');
         }
